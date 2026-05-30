@@ -29,7 +29,8 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
            name: dest-artifact
-           path: output-artifact 
+           path: |
+             dist
   deploy:
     needs: build
     runs-on: ubuntu-latest
