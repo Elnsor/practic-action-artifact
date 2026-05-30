@@ -35,5 +35,12 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Git artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: dest-artifact
       - name: Deploy
         run: echo "Deploying..."
+      - name: check download artifact 
+        run: ls -l
+
