@@ -30,7 +30,7 @@ jobs:
         run: npm run build
       - name: Git File Name 
         id: newid
-        run: find dist/assets/*.js -type f -exec basename 'script-file={}' >> $GITHUB_OUTPUT \;
+        run: find dist/assets/*.js -type f -execdir 'script-file={}' >> $GITHUB_OUTPUT \;
       - name: upload-artifact
         uses: actions/upload-artifact@v7
         with:
