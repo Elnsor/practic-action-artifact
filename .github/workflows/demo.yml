@@ -9,6 +9,14 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v6
+      - name: Get cach Path
+        id: dpn-cach-dir
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+      - name: caching-depn
+        uses: actions/cache@v5
+        with:
+          path: ${{ steps.dpn-cach-dir.outputs.dir }}
+          key: ${{ runner.os }}--node--${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         run: npm ci
       - name: Lint code
@@ -24,13 +32,25 @@ jobs:
    
       - name: Get code
         uses: actions/checkout@v6
+      - name: Get cach Path
+        id: dpn-cach-dir
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+      - name: caching-depn
+        uses: actions/cache@v5
+        with:
+          path: ${{ steps.dpn-cach-dir.outputs.dir }}
+          key: ${{ runner.os }}--node--${{ hashFiles('**/package-lock.json') }}
+
       - name: Install dependencies
         run: npm ci
+
       - name: Build website
         run: npm run build
+
       - name: Git File Name 
         id: newid
         run: find dist/assets/*.js -type f -printf "script-file=%f\n" >> $GITHUB_OUTPUT 
+        
       - name: upload-artifact
         uses: actions/upload-artifact@v7
         with:
